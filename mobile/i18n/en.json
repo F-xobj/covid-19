@@ -1,0 +1,9 @@
+{
+    "warnings": "Warnings",
+    "ok": "Ok",
+    "waiting": "Waiting",
+    "no_internet_connection": "No Inrenet Connection",
+    "something_wrong": "Something Wrong Please Try Later",
+    "covid_statistics": "Covid Statistics",
+    "new_confirmed": "NewConfirmed"
+}
