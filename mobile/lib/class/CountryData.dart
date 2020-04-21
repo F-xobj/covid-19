@@ -1,7 +1,7 @@
 class CountryData {
     String _countryName, _countryCode, _slug, _date;
     int _newConfirmed, _totalConfirmed, _newDeaths, _totalDeaths,
-           _newRecovered, _totalRecovered;
+        _newRecovered, _totalRecovered;
     
     CountryData({
         String countryName,

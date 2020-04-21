@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/home/qais/work/covied_19/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-az/values-az.xml",
+            "outputFile": "/home/qais/work/covid_19/covid-19/mobile/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-az/values-az.xml",
             "map": [
                 {
                     "source": "/home/qais/.gradle/caches/transforms-2/files-2.1/7faf2ad74a0b9932e38d86e684646e95/core-1.0.0/res/values-az/values-az.xml",

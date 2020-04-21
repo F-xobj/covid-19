@@ -6,6 +6,8 @@ import 'package:covied_19/Model/HttpModel.dart';
 import 'package:covied_19/class/Covid-19-statistic.dart';
 
 class CovidVm {
+    static String url = 'https://api.covid19api.com/summary';
+
     static Future<bool> checkNetworkConnection() async {
         Completer<bool> completer = new Completer();
         Connectivity().checkConnectivity().then((connectivityResult){
@@ -20,14 +22,12 @@ class CovidVm {
     }
 
     static Future<Covid> getCovidStatistics() async {
-        String url = 'https://api.covid19api.com/summary';
         Completer<Covid> completer = new Completer();
 
         checkNetworkConnection().then((flag) {
             if(flag) {
                 HttpModel.getData(url).then((strData){
                     Map map = jsonDecode(strData);
-                    print(strData);
                     Covid covid = Covid.fromJson(map);
                     completer.complete(covid);
                 }).catchError((error){

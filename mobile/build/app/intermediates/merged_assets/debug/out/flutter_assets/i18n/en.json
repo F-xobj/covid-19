@@ -3,5 +3,7 @@
     "ok": "Ok",
     "waiting": "Waiting",
     "no_internet_connection": "No Inrenet Connection",
-    "somthing_wrong": "Something Wrong Please Try Later"
+    "something_wrong": "Something Wrong Please Try Later",
+    "covid_statistics": "Covid Statistics",
+    "new_confirmed": "NewConfirmed"
 }
