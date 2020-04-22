@@ -1,0 +1,22 @@
+.mainContainer {
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+.dashboardContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.dashboardContainer .leftNavigation {
+  width: 15%;
+  background-image: url(../../assets/img/corona.jpg);
+  height: 96vh;
+  overflow: hidden;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #464646;
+}
+.dashboardContainer .rightContent {
+  width: 85%;
+}

@@ -1,0 +1,29 @@
+.sidebarContainer {
+  height: 100%;
+  background: #000000b3;
+  color: #fff;
+}
+.list {
+  display: flex;
+
+  flex-direction: column;
+
+  padding-top: 100px;
+}
+.textWithIcon {
+  display: flex;
+  padding: 15px;
+  border-radius: 15px;
+  border: 1px solid #fff;
+  width: 80%;
+  margin: 15px;
+  font-size: 17px;
+  cursor: pointer;
+}
+.text {
+  margin: 0 10px;
+}
+.textWithIcon:hover {
+  background-color: #fff;
+  color: #000;
+}
