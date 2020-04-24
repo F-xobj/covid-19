@@ -27,6 +27,14 @@ class _MyBaseScreen extends State<BaseScreen> {
     Widget _appBarTitle;
     List<CountryData> filteredParticipants = new List();
     final TextEditingController _filter = new TextEditingController();
+    int colorIndex = -1;
+    List<Color> colors = [
+        DARK_BLUE,
+        GREEN,
+        ORANGE,
+        LIGHT_BLUE,
+        RED
+    ];
 
     @override
     void initState() {
@@ -39,7 +47,7 @@ class _MyBaseScreen extends State<BaseScreen> {
             setState(() {
                 covid = data;
                 filteredParticipants = data.countryData;
-            }); 
+            });
         }).catchError((error) {
             if(error is InternetException) {
                 OwnDialog.customDialog(
@@ -122,13 +130,18 @@ class _MyBaseScreen extends State<BaseScreen> {
                 ],
             ),
             body: covid != null
-                ? ListView.builder(
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    itemCount: filteredParticipants.length,
-                    itemBuilder: (BuildContext context, int index) {
-                        return _buildCountryStatistics(filteredParticipants[index]);
-                    }
+                ? ListView(
+                    children: <Widget>[
+                        _buildGlobalStatistics(covid.globalData),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            itemCount: filteredParticipants.length,
+                            itemBuilder: (BuildContext context, int index) {
+                                return _buildCountryStatistics(filteredParticipants[index]);
+                            }
+                        )
+                    ],
                 )
                 : Center(
                     child: CircularProgressIndicator(
@@ -139,148 +152,408 @@ class _MyBaseScreen extends State<BaseScreen> {
         );
     }
 
-    Widget _buildCountryStatistics(CountryData country) {
+    Widget _buildGlobalStatistics(Global global) {
         return Container(
-            color: Colors.orange,
-            margin: EdgeInsets.only(top: 16),
+            padding: EdgeInsets.all(8),
+            height: 435,
+            color: Colors.white,
+            child: Column(
+                children: <Widget>[
+                    Container(
+                        padding: EdgeInsets.all(16),
+                        child:Text(
+                            'World Statistics',
+                            style: TextStyle(
+                                color: PRIMARY_COLOR,
+                                fontSize: 24
+                            ),
+                        ),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                            Flexible(
+                                child: Container(
+                                    child: Card(
+                                        elevation: 4,
+                                        child: Column(
+                                            children: <Widget>[
+                                                Container(
+                                                    width: 200,
+                                                    alignment: Alignment.center,
+                                                    padding: EdgeInsets.all(16),
+                                                    child: Text(
+                                                        'Total Confirmed',
+                                                        style: TextStyle(
+                                                            color: PRIMARY_COLOR,
+                                                            fontSize: 18,
+                                                        ),
+                                                    ),
+                                                ),
+                                                Container(
+                                                    width: 200,
+                                                    alignment: Alignment.center,
+                                                    padding: EdgeInsets.all(16),
+                                                    child: Text(
+                                                        global.totalConfirmed.toString(),
+                                                        style: TextStyle(
+                                                            color: PRIMARY_COLOR,
+                                                            fontSize: 18,
+                                                        ),
+                                                    ),
+                                                ),
+                                            ],
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            Flexible(
+                                child: Container(
+                                    child: Card(
+                                        elevation: 4,
+                                        child: Column(
+                                            children: <Widget>[
+                                                Container(
+                                                    width: 200,
+                                                    alignment: Alignment.center,
+                                                    padding: EdgeInsets.all(16),
+                                                    child: Text(
+                                                        'New Confirmed',
+                                                        style: TextStyle(
+                                                            color: PRIMARY_COLOR,
+                                                            fontSize: 18,
+                                                        ),
+                                                    ),
+                                                ),
+                                                Container(
+                                                    width: 200,
+                                                    alignment: Alignment.center,
+                                                    padding: EdgeInsets.all(16),
+                                                    child: Text(
+                                                        global.newConfirmed.toString(),
+                                                        style: TextStyle(
+                                                            color: PRIMARY_COLOR,
+                                                            fontSize: 18,
+                                                        ),
+                                                    ),
+                                                )
+                                            ],
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ],
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                            Flexible(
+                                child: Container(
+                                    child: Card(
+                                        elevation: 4,
+                                        child: Column(
+                                            children: <Widget>[
+                                                Container(
+                                                    width: 200,
+                                                    alignment: Alignment.center,
+                                                    padding: EdgeInsets.all(16),
+                                                    child: Text(
+                                                        'Total Recovered',
+                                                        style: TextStyle(
+                                                            color: PRIMARY_COLOR,
+                                                            fontSize: 18,
+                                                        ),
+                                                    ),
+                                                ),
+                                                Container(
+                                                    width: 200,
+                                                    alignment: Alignment.center,
+                                                    padding: EdgeInsets.all(16),
+                                                    child: Text(
+                                                        global.totalRecovered.toString(),
+                                                        style: TextStyle(
+                                                            color: PRIMARY_COLOR,
+                                                            fontSize: 18,
+                                                        ),
+                                                    ),
+                                                )
+                                            ],
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            Flexible(
+                                child: Container(
+                                    child: Card(
+                                        elevation: 4,
+                                        child: Column(
+                                            children: <Widget>[
+                                                Container(
+                                                    width: 200,
+                                                    alignment: Alignment.center,
+                                                    padding: EdgeInsets.all(16),
+                                                    child: Text(
+                                                        'New Recovered',
+                                                        style: TextStyle(
+                                                            color: PRIMARY_COLOR,
+                                                            fontSize: 18,
+                                                        ),
+                                                    ),
+                                                ),
+                                                Container(
+                                                    width: 200,
+                                                    alignment: Alignment.center,
+                                                    padding: EdgeInsets.all(16),
+                                                    child: Text(
+                                                        global.newRecovered.toString(),
+                                                        style: TextStyle(
+                                                            color: PRIMARY_COLOR,
+                                                            fontSize: 18,
+                                                        ),
+                                                    ),
+                                                ),
+                                            ],
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ],
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                            Flexible(
+                                child: Container(
+                                    child: Card(
+                                        elevation: 4,
+                                        child: Column(
+                                            children: <Widget>[
+                                                Container(
+                                                    width: 200,
+                                                    alignment: Alignment.center,
+                                                    padding: EdgeInsets.all(16),
+                                                    child: Text(
+                                                        'Total Deaths',
+                                                        style: TextStyle(
+                                                            color: PRIMARY_COLOR,
+                                                            fontSize: 18,
+                                                        ),
+                                                    ),
+                                                ),
+                                                Container(
+                                                    width: 200,
+                                                    padding: EdgeInsets.all(16),
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                        global.totalDeaths.toString(),
+                                                        style: TextStyle(
+                                                            color: PRIMARY_COLOR,
+                                                            fontSize: 18,
+                                                        ),
+                                                    ),
+                                                ),
+                                            ],
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            Flexible(
+                                child: Container(
+                                    child: Card(
+                                        elevation: 4,
+                                        child: Column(
+                                            children: <Widget>[
+                                                Container(
+                                                    width: 200,
+                                                    alignment: Alignment.center,
+                                                    padding: EdgeInsets.all(16),
+                                                    child: Text(
+                                                        'New Deaths',
+                                                        style: TextStyle(
+                                                            color: PRIMARY_COLOR,
+                                                            fontSize: 18,
+                                                        ),
+                                                    ),
+                                                ),
+                                                Container(
+                                                    width: 200,
+                                                    alignment: Alignment.center,
+                                                    padding: EdgeInsets.all(16),
+                                                    child: Text(
+                                                        global.newDeaths.toString(),
+                                                        style: TextStyle(
+                                                            color: PRIMARY_COLOR,
+                                                            fontSize: 18,
+                                                        ),
+                                                    ),
+                                                ),
+                                            ],
+                                        ),
+                                    ),
+                                )
+                            ),
+                        ],
+                    ),
+                ],
+            ),
+        );
+    }
+
+    Widget _buildCountryStatistics(CountryData country) {
+        if(colorIndex >= 4) {
+            colorIndex = 0;
+        }
+        else {
+            colorIndex += 1;
+        }
+
+        return Container(
+            color: colors[colorIndex],
             padding: EdgeInsets.all(16),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                     Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                            Container(
-                                width: 120,
-                                height: 120,
-                                padding: EdgeInsets.all(16),
-                                decoration:  BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: new Border.all(
-                                        color: PRIMARY_COLOR,
-                                        width: 2.5,
-                                    ),
-                                ),
-                                child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                        Text(
-                                            country.newConfirmed != null
-                                                ? country.newConfirmed.toString()
-                                                : '',
-                                            style: TextStyle(
-                                                color: PRIMARY_COLOR,
-                                                fontSize: 18,
-                                            ),
+                            Flexible(
+                                child:Container(
+                                    width: 120,
+                                    height: 120,
+                                    padding: EdgeInsets.all(16),
+                                    decoration:  BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: new Border.all(
+                                            color: BACKGROUND,
+                                            width: 2.5,
                                         ),
-                                        Text(
-                                            'News',
-                                            style: TextStyle(
-                                                color: PRIMARY_COLOR,
-                                                fontSize: 18,
-                                            ),
-                                        )
-                                    ],
-                                ),
-                            ),
-                            Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                    Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: <Widget>[
-                                            Container(
-                                                margin: EdgeInsets.only(left:16, top: 16),
-                                                child:Text(
-                                                        country.countryName,
-                                                        style: TextStyle(
-                                                            color: PRIMARY_COLOR,
-                                                            fontSize: 4,
-                                                        ),
-                                                        // overflow: TextOverflow.ellipsis,
-                                                    )
-                                            ),
-                                            // Container(
-                                            //         margin: EdgeInsets.only(left: 8,right: 16, top: 16),
-                                            //         child: Flags.getFullFlag(country.countryCode, 20, 20),
-                                            //     )
-                                        ],
                                     ),
-                                    Row(
+                                    child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
-                                            Container(
-                                                margin: EdgeInsets.only(left: 16, top: 8),
-                                                child: Text(
-                                                    'TotalConfirmed :',
-                                                    style: TextStyle(
-                                                        color: PRIMARY_COLOR,
-                                                        fontSize: 18,
-                                                    ),
-                                                )
+                                            Text(
+                                                country.newConfirmed != null
+                                                    ? country.newConfirmed.toString()
+                                                    : '',
+                                                style: TextStyle(
+                                                    color: BACKGROUND,
+                                                    fontSize: 18,
+                                                ),
                                             ),
-                                            Container(
-                                                margin: EdgeInsets.only(right: 16, top: 8),
-                                                child: Text(
-                                                    country.totalConfirmed != null
-                                                        ? country.totalConfirmed.toString()
-                                                        : '',
-                                                    style: TextStyle(
-                                                        color: PRIMARY_COLOR,
-                                                        fontSize: 18,
-                                                    ),
-                                                )
+                                            Text(
+                                                'News',
+                                                style: TextStyle(
+                                                    color: BACKGROUND,
+                                                    fontSize: 18,
+                                                ),
                                             )
                                         ],
                                     ),
-                                    Row(
-                                        children: <Widget>[
-                                            Row(
-                                                children: <Widget>[
-                                                    Container(
-                                                        margin: EdgeInsets.only(left: 16, top: 32),
-                                                        child: Icon(Icons.favorite_border)
-                                                    ),
-                                                    Container(
-                                                        margin: EdgeInsets.only(right: 16, top: 32),
-                                                        child: Text(
-                                                            country.totalDeaths != null
-                                                                ? country.totalDeaths.toString()
-                                                                : '',
-                                                            style: TextStyle(
-                                                                color: PRIMARY_COLOR,
-                                                                fontSize: 18,
-                                                            ),
-                                                        )
+                                )
+                            ),
+                            Flexible(
+                                flex: 2,
+                                child:Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                        Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: <Widget>[
+                                                Flexible(
+                                                    child:Container(
+                                                        margin: EdgeInsets.only(left:16, top: 16),
+                                                        child:Text(
+                                                                country.countryName,
+                                                                style: TextStyle(
+                                                                    color: BACKGROUND,
+                                                                    fontSize: 24,
+                                                                ),
+                                                                // textAlign: TextAlign.justify,
+                                                                // maxLines: 1,
+                                                                // softWrap: true,
+                                                            )
                                                     )
-                                                ],
-                                            ),
-                                            Row(
-                                                children: <Widget>[
-                                                    Container(
-                                                        margin: EdgeInsets.only(left: 16, top: 32),
-                                                        child: Icon(Icons.feedback)
-                                                    ),
-                                                    Container(
-                                                        margin: EdgeInsets.only(right: 16, top: 32),
-                                                        child: Text(
-                                                            country.totalRecovered != null 
-                                                                ? country.totalRecovered.toString()
-                                                                : '',
-                                                            style: TextStyle(
-                                                                color: PRIMARY_COLOR,
-                                                                fontSize: 18,
-                                                            ),
-                                                        )
+                                                ),
+                                            ],
+                                        ),
+                                        Row(
+                                            children: <Widget>[
+                                                Container(
+                                                    margin: EdgeInsets.only(left: 16, top: 8),
+                                                    child: Text(
+                                                        'TotalConfirmed :',
+                                                        style: TextStyle(
+                                                            color: BACKGROUND,
+                                                            fontSize: 18,
+                                                        ),
                                                     )
-                                                ],
-                                            ),
-                                        ],
-                                    )
-                                ],
+                                                ),
+                                                Container(
+                                                    margin: EdgeInsets.only(right: 16, top: 8),
+                                                    child: Text(
+                                                        country.totalConfirmed != null
+                                                            ? country.totalConfirmed.toString()
+                                                            : '',
+                                                        style: TextStyle(
+                                                            color: BACKGROUND,
+                                                            fontSize: 18,
+                                                        ),
+                                                    )
+                                                )
+                                            ],
+                                        ),
+                                        Row(
+                                            children: <Widget>[
+                                                Row(
+                                                    children: <Widget>[
+                                                        Container(
+                                                            margin: EdgeInsets.only(left: 16, top: 32),
+                                                            child: Icon(Icons.favorite_border, color: BACKGROUND,)
+                                                        ),
+                                                        Container(width: 4,),
+                                                        Container(
+                                                            margin: EdgeInsets.only(right: 16, top: 32),
+                                                            child: Text(
+                                                                country.totalDeaths != null
+                                                                    ? country.totalDeaths.toString()
+                                                                    : '',
+                                                                style: TextStyle(
+                                                                    color: BACKGROUND,
+                                                                    fontSize: 18,
+                                                                ),
+                                                            )
+                                                        )
+                                                    ],
+                                                ),
+                                                Row(
+                                                    children: <Widget>[
+                                                        Container(
+                                                            margin: EdgeInsets.only(left: 16, top: 32),
+                                                            child: Icon(Icons.feedback, color: BACKGROUND,)
+                                                        ),
+                                                        Container(width: 4,),
+                                                        Container(
+                                                            margin: EdgeInsets.only(right: 16, top: 32),
+                                                            child: Text(
+                                                                country.totalRecovered != null 
+                                                                    ? country.totalRecovered.toString()
+                                                                    : '',
+                                                                style: TextStyle(
+                                                                    color: BACKGROUND,
+                                                                    fontSize: 18,
+                                                                ),
+                                                            )
+                                                        )
+                                                    ],
+                                                ),
+                                            ],
+                                        )
+                                    ],
+                                )
                             )
                         ],
-                    )
+                    ),
                 ],
             ),
         );

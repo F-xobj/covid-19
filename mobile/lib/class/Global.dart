@@ -14,7 +14,7 @@ class Global {
         this._newDeaths = newDeaths;
         this._totalDeaths = totalDeaths;
         this._newRecovered = newRecovered;
-        this._totalRecovered = _totalRecovered;
+        this._totalRecovered = totalRecovered;
     }
 
     int get newConfirmed => this._newConfirmed;
@@ -37,14 +37,13 @@ class Global {
 
 
     factory Global.fromJson(Map<String,dynamic> data) {
-
-         return new Global(
-            newConfirmed: data['NewConfirmed'],
-            newDeaths: data['NewDeaths'],
-            totalRecovered: data['TotalRecovered'],
-            newRecovered: data['NewRecovered'],
-            totalConfirmed: data['TotalConfirmed'],
-            totalDeaths: data['TotalDeaths']
+        return new Global(
+            newConfirmed: data['Global']['NewConfirmed'],
+            newDeaths: data['Global']['NewDeaths'],
+            totalRecovered: data['Global']['TotalRecovered'],
+            newRecovered: data['Global']['NewRecovered'],
+            totalConfirmed: data['Global']['TotalConfirmed'],
+            totalDeaths: data['Global']['TotalDeaths']
          );
      }
 }
